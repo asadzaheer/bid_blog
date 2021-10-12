@@ -13,6 +13,7 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('content')
+            ->add('is_hidden')
             ->add('post');
     }
 

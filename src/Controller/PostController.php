@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/')]
 class PostController extends AbstractController
@@ -23,6 +24,9 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/post/new', name: 'post_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
@@ -53,6 +57,7 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $comment->setIsHidden(0);
             $comment->setPost($post);
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -67,6 +72,9 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post): Response
     {
@@ -85,6 +93,9 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/post/{id}', name: 'post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post): Response
     {
