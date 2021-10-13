@@ -6,6 +6,13 @@
 {% block body %}
 	<h1>Post index</h1>
 
+	<form action="/search" method="GET">
+		<label>Search:
+			<input type="search" name="search"></label>
+		<input type="submit" value="Go">
+	</form>
+
+
 	<table class="table">
 		<thead>
 			<tr>
