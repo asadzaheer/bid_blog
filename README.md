@@ -1,4 +1,5 @@
 pre-requsite 
+ PHP 8.x.x (for native attributes to configure routes)
  https://symfony.com/doc/current/setup.html
  https://getcomposer.org/download/
  optional https://symfony.com/download
