@@ -21,6 +21,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
       $comment = new Comment();
       $comment->setPost($this->getReference($post));
       $comment->setContent($paragraphs[$i]);
+      $comment->setIsHidden(0);
       $manager->persist($comment);
     }
 
