@@ -65,10 +65,31 @@ class PostController extends AbstractController
             return $this->redirectToRoute('post_show', ['id' => $post->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        $query = $request->query->get('search');
+
+        if (!empty($query)) {
+            preg_match_all('/\w*' . $query . '\w*/', $post->getContent(), $matches);
+            $highlight = array();
+            foreach ($matches[0] as $key => $match) {
+                similar_text($query, $match, $perc);
+                if ($perc >= 75 && $perc <= 85) {
+                    $highlight[] = '<span class="orange-bg">' . $match . '</span>';
+                } else if ($perc > 85 && $perc <= 95) {
+                    $highlight[] = '<span class="yellow-bg">' . $match . '</span>';
+                } else if ($perc > 95) {
+                    $highlight[] = '<span class="green-bg">' . $match . '</span>';
+                }
+            }
+            if (count($highlight) > 0) {
+                $post->setContent(str_replace($matches[0], $highlight, $post->getContent()));
+            }
+        }
+
         return $this->renderForm('post/show.html.twig', [
             'post' => $post,
             'comment' => $comment,
             'form' => $form,
+            'query' => $query
         ]);
     }
 
