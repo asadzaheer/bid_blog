@@ -4,40 +4,106 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Post index</h1>
+<style>
+	#searchResults {
+		display: none;
+		position: absolute;
+		background: white;
+		border: 1px solid black;
+		border-radius: 5px;
+		top: 130px;
+		left: 60px;
+		padding: 10px;
+		list-style: none;
+		margin: 0;
+		width: 200px;
+	}
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Title</th>
-				<th>Content</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for post in posts %}
-				<tr>
-					<td>{{ post.id }}</td>
-					<td>{{ post.title }}</td>
-					<td>{{ post.content }}</td>
-					<td>
-						<a href="{{ path('post_show', {'id': post.id}) }}">show</a>
-						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
-						{% endif %}
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="4">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	#searchResults h4 {
+		margin: 0 0 10px 0;
+	}
+</style>
+<h1>Post index</h1>
 
-	<h1>
-		<a href="{{ path('post_new') }}">Create new</a>
-	</h1>
+<form action="/search" method="GET">
+	<label>Search:
+		<input id="search" type="search" name="search" autocomplete="off" placeholder="Type 3 or more char to search">
+	</label>
+	<input type="submit" value="Go">
+	<ul id="searchResults"></ul>
+</form>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Content</th>
+			<th>actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for post in posts %}
+		<tr>
+			<td>{{ post.id }}</td>
+			<td>{{ post.title }}</td>
+			<td>{{ post.content }}</td>
+			<td>
+				<a href="{{ path('post_show', {'id': post.id}) }}">show</a>
+				{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
+				{% endif %}
+			</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan="4">no records found</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<h1>
+	<a href="{{ path('post_new') }}">Create new</a>
+</h1>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		var searchRequest = null;
+		$("#search").keyup(function () {
+			var minlength = 3;
+			var value = $(this).val();
+			var searchResultsSelector = $("#searchResults").html('');
+			if (value.length >= minlength) {
+				searchResultsSelector.show();
+				searchResultsSelector.append('<h4>Search suggestions </h4>');
+				if (searchRequest != null) {
+					searchRequest.abort();
+				}
+				searchRequest = $.ajax({
+					type: "GET",
+					url: "{{ path('ajax_search') }}",
+					data: {
+						'search': value
+					},
+					dataType: "text",
+					success: function (response) {
+						var result = JSON.parse(response);
+						if (!result) {
+							searchResultsSelector.append('No results');
+						}
+
+						$.each(result, function (index, post) {
+							searchResultsSelector.append('<li><a href="/post/' + post.id + '">' + post.title + '</a></li>');
+						});
+					}
+				});
+			}
+		});
+	});
+</script>
 
 {% endblock %}

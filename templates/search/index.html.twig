@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search results
+{% endblock %}
+
+{% block body %}
+<style>
+	.highlight {
+		font-weight: bold;
+		background-color: yellow;
+	}
+</style>
+
+<div class="example-wrapper">
+	<h1>Search results</h1>
+
+	{% if results %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Content</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for result in results %}
+			<tr>
+				<td>{{ result.id }}</td>
+				<td>{{ result.title | highlight(query) | raw}}</td>
+				<td>{{ result.content | highlight(query) | raw}}</td>
+				<td>
+					<a href="{{ path('post_show', {'id': result.id}) }}">show</a>
+					{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('post_edit', {'id': result.id}) }}">edit</a>
+					{% endif %}
+				</td>
+			</tr>
+			{% else %}
+			<tr>
+				<td colspan="4">no records found</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	No result
+	{% endif %}
+
+</div>
+{% endblock %}
