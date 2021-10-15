@@ -66,4 +66,4 @@ Admin have access to all anonymous routes plus following routes
 | /comment/new | Create new comment |
 | /comment/{id} | Show details of specific comment |
 | /comment/{id}/edit | Edit existing comment |
-| /{id} | Delete an existing comment (Method Delete) |
+| /comment/{id} | Delete an existing comment (Method Delete) |
