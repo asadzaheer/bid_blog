@@ -53,6 +53,7 @@ As anonymous user you have access to following routes
 You can login as admin using following credentials
 
 email: admin@example.com
+
 password: 123456789
 
 Admin have access to all anonymous routes plus following routes
