@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends AbstractController
 {
-    #[Route('/search', name: 'search')]
+    // #[Route('/search', name: 'search')]
     public function index(Request $request): Response
     {
         $results = null;
@@ -25,7 +25,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    #[Route('/ajax-search', name: 'ajax_search')]
+    // #[Route('/ajax-search', name: 'ajax_search')]
     public function ajaxSearch(Request $request): Response
     {
         $results = null;

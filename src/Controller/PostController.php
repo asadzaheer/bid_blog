@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-#[Route('/')]
+// #[Route('/')]
 class PostController extends AbstractController
 {
     #[Route('/', name: 'post_index', methods: ['GET'])]
@@ -27,7 +27,7 @@ class PostController extends AbstractController
     /**
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/post/new', name: 'post_new', methods: ['GET', 'POST'])]
+    // #[Route('/post/new', name: 'post_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $post = new Post();
@@ -48,7 +48,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
+    // #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
     public function show(Post $post, Request $request): Response
     {
         $comment = new Comment();
@@ -80,7 +80,10 @@ class PostController extends AbstractController
                     $highlight[] = '<span class="green-bg">' . $match . '</span>';
                 }
             }
+
             if (count($highlight) > 0) {
+                // echo $matches[0];
+                // echo $highlight;
                 $post->setContent(str_replace($matches[0], $highlight, $post->getContent()));
             }
         }
@@ -96,7 +99,7 @@ class PostController extends AbstractController
     /**
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
+    // #[Route('/post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -117,7 +120,7 @@ class PostController extends AbstractController
     /**
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/post/{id}', name: 'post_delete', methods: ['POST'])]
+    // #[Route('/post/{id}', name: 'post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post): Response
     {
         if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {

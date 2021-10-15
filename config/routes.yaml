@@ -1,3 +1,63 @@
-#index:
+# index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\PostController::index
+
+post_index:
+    path:       /
+    controller: App\Controller\PostController::index
+    methods:    GET
+
+post_new:
+    path:       /post/new
+    controller: App\Controller\PostController::new
+    methods:    GET|POST
+
+post_show:
+    path:       /post/{id}
+    controller: App\Controller\PostController::show
+    methods:    GET|POST
+
+post_edit:
+    path:       /post/{id}/edit
+    controller: App\Controller\PostController::edit
+    methods:    GET|POST
+
+post_delete:
+    path:       /post/{id}
+    controller: App\Controller\PostController::delete
+    methods:    POST
+
+search:
+    path:       /search
+    controller: App\Controller\SearchController::index
+    methods:    GET
+
+ajax_search:
+    path:       /ajax-search
+    controller: App\Controller\SearchController::ajaxSearch
+    methods:    GET
+
+comment_index:
+    path:       /comment
+    controller: App\Controller\CommentController::index
+    methods:    GET
+
+comment_new:
+    path:       /comment/new
+    controller: App\Controller\CommentController::new
+    methods:    GET|POST
+
+comment_show:
+    path:       /comment/{id}
+    controller: App\Controller\CommentController::show
+    methods:    GET
+
+comment_edit:
+    path:       /comment/{id}/edit
+    controller: App\Controller\CommentController::edit
+    methods:    GET|POST
+
+comment_delete:
+    path:       /comment/{id}
+    controller: App\Controller\CommentController::delete
+    methods:    POST
