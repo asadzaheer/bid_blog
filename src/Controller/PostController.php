@@ -82,8 +82,6 @@ class PostController extends AbstractController
             }
 
             if (count($highlight) > 0) {
-                // echo $matches[0];
-                // echo $highlight;
                 $post->setContent(str_replace($matches[0], $highlight, $post->getContent()));
             }
         }

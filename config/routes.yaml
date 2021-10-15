@@ -15,7 +15,7 @@ post_new:
 post_show:
     path:       /post/{id}
     controller: App\Controller\PostController::show
-    methods:    GET|POST
+    methods:    GET
 
 post_edit:
     path:       /post/{id}/edit
