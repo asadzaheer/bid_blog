@@ -1,6 +1,5 @@
 # Requirements
 
- - PHP 8.x.x (for native attributes to configure routes)
  - https://symfony.com/doc/current/setup.html
  - MySQL databse server
  - https://getcomposer.org/download/
